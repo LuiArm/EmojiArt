@@ -13,6 +13,7 @@
 		F683DBBE2B910BFA000A5E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F683DBBD2B910BFA000A5E39 /* Preview Assets.xcassets */; };
 		F683DBC52B926559000A5E39 /* EmojiArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F683DBC42B926559000A5E39 /* EmojiArt.swift */; };
 		F683DBC72B92839B000A5E39 /* EmojiArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = F683DBC62B92839B000A5E39 /* EmojiArtDocument.swift */; };
+		F683DBC92B92EFF9000A5E39 /* EmojiArtDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F683DBC82B92EFF9000A5E39 /* EmojiArtDocumentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		F683DBBD2B910BFA000A5E39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F683DBC42B926559000A5E39 /* EmojiArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArt.swift; sourceTree = "<group>"; };
 		F683DBC62B92839B000A5E39 /* EmojiArtDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocument.swift; sourceTree = "<group>"; };
+		F683DBC82B92EFF9000A5E39 /* EmojiArtDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				F683DBB62B910BF5000A5E39 /* EmojiArtApp.swift */,
 				F683DBB82B910BF5000A5E39 /* ContentView.swift */,
+				F683DBC82B92EFF9000A5E39 /* EmojiArtDocumentView.swift */,
 				F683DBC42B926559000A5E39 /* EmojiArt.swift */,
 				F683DBC62B92839B000A5E39 /* EmojiArtDocument.swift */,
 				F683DBBA2B910BFA000A5E39 /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F683DBC92B92EFF9000A5E39 /* EmojiArtDocumentView.swift in Sources */,
 				F683DBC52B926559000A5E39 /* EmojiArt.swift in Sources */,
 				F683DBB92B910BF5000A5E39 /* ContentView.swift in Sources */,
 				F683DBB72B910BF5000A5E39 /* EmojiArtApp.swift in Sources */,
