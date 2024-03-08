@@ -37,3 +37,11 @@ extension EmojiArt.Emoji {
         Font.system(size: CGFloat(size))
     }
 }
+
+
+extension EmojiArt.Emoji.Position {
+    func `in`(_ geometry: GeometryProxy) -> CGPoint {
+        let center = geometry.frame(in: .local).center
+        return CGPoint(x: center.x + CGFloat(x) , y: center.y - CGFloat(y))
+    }
+}
