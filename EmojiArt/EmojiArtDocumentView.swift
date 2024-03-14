@@ -28,17 +28,25 @@ struct EmojiArtDocumentView: View {
         GeometryReader { geometry in
             ZStack{
                 Color.white
-                AsyncImage(url: document.background)
-                    .position(Emoji.Position.zero.in(geometry))
-                ForEach(document.emojis){emoji in
-                    Text(emoji.string)
-                        .font(emoji.font)
-                        .position(emoji.position.in(geometry))
-                }
+                documentationContents(in: geometry)
             }
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
+        }
+    }
+    
+    @State private var zoom: CGFloat = 1
+    @State private var pan: CGSize = .zero
+    
+    @ViewBuilder
+    private func documentationContents(in geometry: GeometryProxy) -> some View {
+        AsyncImage(url: document.background)
+            .position(Emoji.Position.zero.in(geometry))
+        ForEach(document.emojis){emoji in
+            Text(emoji.string)
+                .font(emoji.font)
+                .position(emoji.position.in(geometry))
         }
     }
     
