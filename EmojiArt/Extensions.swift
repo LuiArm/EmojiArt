@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+typealias CGOffset = CGSize
 
 extension CGRect {
     var center: CGPoint {

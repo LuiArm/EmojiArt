@@ -29,6 +29,8 @@ struct EmojiArtDocumentView: View {
             ZStack{
                 Color.white
                 documentationContents(in: geometry)
+                    .scaleEffect(zoom)
+                    .offset(pan)
             }
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
@@ -37,7 +39,7 @@ struct EmojiArtDocumentView: View {
     }
     
     @State private var zoom: CGFloat = 1
-    @State private var pan: CGSize = .zero
+    @State private var pan: CGOffset = .zero
     
     @ViewBuilder
     private func documentationContents(in geometry: GeometryProxy) -> some View {
