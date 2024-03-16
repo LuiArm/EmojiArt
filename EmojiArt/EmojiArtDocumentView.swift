@@ -29,9 +29,10 @@ struct EmojiArtDocumentView: View {
             ZStack{
                 Color.white
                 documentationContents(in: geometry)
-                    .scaleEffect(zoom)
+                    .scaleEffect(zoom * gestureZoom)
                     .offset(pan)
             }
+            .gesture(zoomGesture)
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
@@ -40,6 +41,17 @@ struct EmojiArtDocumentView: View {
     
     @State private var zoom: CGFloat = 1
     @State private var pan: CGOffset = .zero
+    @GestureState private var gestureZoom: CGFloat = 1
+    
+    private var zoomGesture: some Gesture {
+        MagnificationGesture()
+            .updating($gestureZoom) { inMotionPinchScale, gestureZoom, _ in
+                gestureZoom = inMotionPinchScale
+            }
+            .onEnded { endingPinchScale in
+                zoom *= endingPinchScale
+            }
+    }
     
     @ViewBuilder
     private func documentationContents(in geometry: GeometryProxy) -> some View {
