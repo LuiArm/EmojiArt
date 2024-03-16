@@ -19,6 +19,17 @@ extension CGRect {
     }
     
 }
+
+extension CGOffset {
+    static func +(lhs: CGOffset, rhs: CGOffset) -> CGOffset {
+        CGOffset(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+    //inout parameter gets copied back out. lets lhs be a variable
+    static func +=(lhs: inout CGOffset, rhs: CGOffset) {
+        lhs = lhs + rhs
+    }
+    
+}
 extension String {
     // removes any duplicate characters
     // preserves the order of the characters
