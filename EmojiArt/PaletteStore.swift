@@ -47,6 +47,11 @@ class PaletteStore: ObservableObject {
     
     ///MARK - Intents
     
+    // these functions are the recommend to add Palettes to the PaletteStore
+    // since they try to avoid duplication Identifiable-ly identical Palettes
+    // by first removing/replacing any Palette with the same id that is already in palettes
+    // it does not "remedy" existing duplication, it just does not "cause" new duplication
+    
     func insert(_ palette: Palette, at insertionIndex: Int? = nil) { //"at" default is cursorIndex
         let insertIndex = boundsCheckedPaletteIndex(insertionIndex ?? cursorIndex)
         if let index = palettes.firstIndex(where: {$0.id == palette.id}) {
@@ -55,6 +60,10 @@ class PaletteStore: ObservableObject {
         }else {
             palettes.insert(palette, at: insertionIndex ?? 0)
         }
+    }
+    
+    func insert(name: String, emojis: String, at index: Int? = nil) {
+        insert(Palette(name: name, emojis: emojis), at: index)
     }
     
     func append(_ palette: Palette) {// at the end of palettes
@@ -70,7 +79,7 @@ class PaletteStore: ObservableObject {
         }
     }
     
-//    func append(name: String, emojis: String) {
-//        append(name: name, emojis: emojis)
-//    }
+    func append(name: String, emojis: String) {
+        append(Palette(name: name, emojis: emojis))
+    }
 }
