@@ -75,10 +75,10 @@
 				F6B704A92B96D69E00ABA337 /* Extensions.swift */,
 				F62319C82B9FFA0A00799E78 /* Sturldata.swift */,
 				F6FE274A2BA60850001502BD /* Palette.swift */,
+				F6FE274E2BABB4E2001502BD /* PaletteChooserView.swift */,
 				F6FE274C2BAA40E2001502BD /* PaletteStore.swift */,
 				F683DBBA2B910BFA000A5E39 /* Assets.xcassets */,
 				F683DBBC2B910BFA000A5E39 /* Preview Content */,
-				F6FE274E2BABB4E2001502BD /* PaletteChooserView.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
