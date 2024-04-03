@@ -30,7 +30,7 @@ struct EmojiArtDocumentView: View {
                 Color.white
                 documentationContents(in: geometry)
                     .scaleEffect(zoom * gestureZoom)
-                    .offset(pan)
+                    .offset(pan + gesturePan)
             }
             .gesture(panGesture.simultaneously(with: zoomGesture))
             .dropDestination(for: Sturldata.self) { sturldatas, location in
