@@ -32,6 +32,11 @@ class EmojiArtDocument: ObservableObject {
         }
     }
     
+    init() {
+        
+        
+    }
+    
     var emojis: [Emoji] {
         emojiArt.emojis
     }
