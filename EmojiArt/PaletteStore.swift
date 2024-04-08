@@ -23,14 +23,16 @@ extension UserDefaults {
     
 }
 class PaletteStore: ObservableObject {
+    private var userDefaultsKey: String {"PaletteStore" + name}
+    
     let name: String
     var palettes: [Palette] {
         get {
-            UserDefaults.standard.palettes(forKey: name)
+            UserDefaults.standard.palettes(forKey: userDefaultsKey)
         }
         set {
             if !newValue.isEmpty {
-                UserDefaults.standard.set(newValue, forKey: name)
+                UserDefaults.standard.set(newValue, forKey: userDefaultsKey)
                 objectWillChange.send()
             }
         }
@@ -42,7 +44,6 @@ class PaletteStore: ObservableObject {
         self.name = name
         if palettes.isEmpty{
             palettes = Palette.builtins
-            
             if palettes.isEmpty {
                 palettes = [Palette(name: "Warning", emojis: "⚠️")]
             }
