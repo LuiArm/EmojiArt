@@ -18,7 +18,8 @@ struct PaletteChooserView: View {
         }
         .clipped()
         .sheet(isPresented: $showPaletteEditor){
-            PaletteEditor()
+            PaletteEditor(palette: $store.palettes[store.cursorIndex])
+                .font(nil)
         }
     }
     
