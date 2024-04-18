@@ -23,8 +23,10 @@ struct PaletteChooserView: View {
                 .font(nil)
         }
         .sheet(isPresented: $showPaletteList) {
-            PaletteList()
-                .font(nil)
+            NavigationStack {
+                PaletteList(store: store)
+                    .font(nil)
+            }
         }
     }
     
