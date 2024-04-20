@@ -13,6 +13,9 @@ class EmojiArtDocument: ObservableObject {
     @Published private var emojiArt = EmojiArt() {
         didSet {
            autoSave()
+            if emojiArt.background != oldValue.background {
+                fetchBackgroundImage()
+            }
         }
     }
     
@@ -49,6 +52,22 @@ class EmojiArtDocument: ObservableObject {
     @Published var background: Background = .none
     
     // MARK: - Background Image
+    
+    func fetchBackgroundImage() {
+        if let url = emojiArt.background {
+            background = .fetching(url)
+            background = .found(fetchUIImage(from: url))
+            background = .failed("error message")
+        } else {
+            background = .none
+        }
+    }
+    
+    private func fetchUIImage(from url: URL) -> UIImage {
+        let (data, _) = URLSession.shared.data(from: url)
+        return UIImage(data: data)!
+    }
+    
     enum Background {
         case none
         case fetching(URL)
