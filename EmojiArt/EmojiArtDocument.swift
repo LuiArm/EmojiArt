@@ -14,7 +14,9 @@ class EmojiArtDocument: ObservableObject {
         didSet {
            autoSave()
             if emojiArt.background != oldValue.background {
-                fetchBackgroundImage()
+                Task {
+                    await fetchBackgroundImage()
+                }
             }
         }
     }
@@ -53,19 +55,35 @@ class EmojiArtDocument: ObservableObject {
     
     // MARK: - Background Image
     
-    func fetchBackgroundImage() {
+    @MainActor
+    func fetchBackgroundImage() async {
         if let url = emojiArt.background {
             background = .fetching(url)
-            background = .found(fetchUIImage(from: url))
-            background = .failed("error message")
+            do {
+                let image = try await fetchUIImage(from: url)
+                if url == emojiArt.background {
+                    background = .found(try await fetchUIImage(from: url))
+                }
+            } catch {
+                background = .failed("Could not set background: \(error.localizedDescription)")
+            }
+           
         } else {
             background = .none
         }
     }
     
-    private func fetchUIImage(from url: URL) -> UIImage {
-        let (data, _) = URLSession.shared.data(from: url)
-        return UIImage(data: data)!
+    private func fetchUIImage(from url: URL) async throws -> UIImage {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        if let uiImage = UIImage(data: data){
+            return uiImage
+        } else {
+            throw FetchError.badImageData
+        }
+    }
+    
+    enum FetchError: Error {
+        case badImageData
     }
     
     enum Background {

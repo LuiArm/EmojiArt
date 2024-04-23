@@ -28,6 +28,12 @@ struct EmojiArtDocumentView: View {
         GeometryReader { geometry in
             ZStack{
                 Color.white
+                if document.background.isFetching {
+                    ProgressView()
+                        .scaleEffect(2)
+                        .tint(.blue)
+                        .position(Emoji.Position.zero.in(geometry))
+                }
                 documentationContents(in: geometry)
                     .scaleEffect(zoom * gestureZoom)
                     .offset(pan + gesturePan)
@@ -36,8 +42,44 @@ struct EmojiArtDocumentView: View {
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
+            .onChange(of: document.background.failureReason) { value, reason in
+                showBackgroundFailureAlert = (reason != nil)
+            }
+            .onChange(of: document.background.uiImage){ uiImage in
+                zoomToFit(uiImage?.size, in: geometry)
+            }
+            .alert(
+                   "Set Background",
+                   isPresented: $showBackgroundFailureAlert,
+                   presenting: document.background.failureReason,
+                   actions: {reason in
+                       Button("OK", role: .cancel){}
+                   },
+                   message: {reason in
+                       Text(reason)
+                      } )
         }
     }
+    
+    private func zoomToFit(_ size: CGSize?, in geometry: GeometryProxy) {
+        if let size {
+            zoomToFit(CGRect(center: .zero, size: size), in: geometry)
+        }
+    }
+    
+    private func zoomToFit(_ rect: CGRect, in geometry: GeometryProxy) {
+        withAnimation {
+            if rect.size.width > 0, rect.size.height > 0,
+               geometry.size.width > 0, geometry.size.height > 0 {
+                let hZoom = geometry.size.width / rect.size.width
+                let vZoom = geometry.size.height / rect.size.height
+                zoom = min(hZoom, vZoom)
+                pan = CGOffset(width: -rect.midX * zoom, height: -rect.midY * zoom)
+            }
+        }
+    }
+    
+    @State private var showBackgroundFailureAlert = false
     
     @State private var zoom: CGFloat = 1
     @State private var pan: CGOffset = .zero
