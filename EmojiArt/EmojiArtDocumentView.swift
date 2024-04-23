@@ -39,13 +39,16 @@ struct EmojiArtDocumentView: View {
                     .offset(pan + gesturePan)
             }
             .gesture(panGesture.simultaneously(with: zoomGesture))
+            .onTapGesture(count: 2) {
+                zoomToFit(document.bbox, in: geometry)
+            }
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
             .onChange(of: document.background.failureReason) { value, reason in
                 showBackgroundFailureAlert = (reason != nil)
             }
-            .onChange(of: document.background.uiImage){ uiImage in
+            .onChange(of: document.background.uiImage){ uiImage, _ in
                 zoomToFit(uiImage?.size, in: geometry)
             }
             .alert(
