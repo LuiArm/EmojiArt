@@ -75,6 +75,6 @@ struct PaletteView: View {
         .navigationTitle(palette.name)
 }
 
-#Preview {
-    PaletteList()
-}
+//#Preview {
+//    PaletteList()
+//}

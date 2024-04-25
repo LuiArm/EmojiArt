@@ -6,13 +6,29 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
-class EmojiArtDocument: ObservableObject {
+class EmojiArtDocument: ReferenceFileDocument {
+    func snapshot(contentType: UTType) throws -> Data {
+        <#code#>
+    }
+    
+    func fileWrapper(snapshot: Data, configuration: WriteConfiguration) throws -> FileWrapper {
+        <#code#>
+    }
+    
+    typealias Snapshot = Data
+    
+    static var readableContentTypes: [UTType]
+    
+    required init(configuration: ReadConfiguration) throws {
+        <#code#>
+    }
+    
     typealias Emoji = EmojiArt.Emoji
     
     @Published private var emojiArt = EmojiArt() {
         didSet {
-           autoSave()
             if emojiArt.background != oldValue.background {
                 Task {
                     await fetchBackgroundImage()
@@ -21,28 +37,8 @@ class EmojiArtDocument: ObservableObject {
         }
     }
     
-    private let autosaveURL: URL = URL.documentsDirectory.appendingPathComponent("Autosaved.emojiart")
     
-    private func autoSave(){
-        save(to: autosaveURL)
-        print("autosave to \(autosaveURL)")
-    }
-    
-    private func save(to url: URL) {
-        do{
-            let data = try emojiArt.json()
-            try data.write(to: url)
-        } catch let error {
-            print("\(error.localizedDescription)")
-        }
-    }
-    
-    init() {
-        if let data = try? Data(contentsOf: autosaveURL),
-            let autosavedEmojiArt = try? EmojiArt(json: data){
-                emojiArt = autosavedEmojiArt
-            }
-    }
+    init() { }
     
     var emojis: [Emoji] {
         emojiArt.emojis
